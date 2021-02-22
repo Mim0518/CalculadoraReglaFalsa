@@ -7,7 +7,7 @@ public class CalcReglaFalsa {
     static double ax[] = new double[5];
     static boolean pol = false;    
     static int cont = 0;
-    static double Es = 0, Ea = 0, x = 0, c = 0, x1 = 0, x2 = 0, xr = 0, fxr = 0, fx1 = 0, fx2 = 0;
+    static double Es = 0, Ea = 0, x = 0, c = 0, x1 = 0, x2 = 0, xr = 0, fxr = 0, fx1 = 0, fx2 = 0, it = 0;
     static Scanner sc = new Scanner(System.in);
 
     static void programa(){
@@ -18,15 +18,17 @@ public class CalcReglaFalsa {
         ingresaInter();
         System.out.println("[3] - Ingresar cifras significativas");
         ingresaCif();
+        System.out.println("[4] - Ingresar máximo de iteraciones");
+        iteracionesMax();
         metodoRegla();
+    }
+    static void iteracionesMax(){
+        System.out.print("Ingrese el número máximo de iteraciones permitidas: ");
+        it = sc.nextInt();
     }
     static void metodoRegla(){
        Ea = 100;
        boolean esX1 = true;
-       fx1 = polinimio(x1);
-       fx2 = polinimio(x2);
-       xr = ((fx2*x1)-(fx1*x2))/(fx2-fx1);
-       imprimir();
        do{
            fx1 = polinimio(x1);
            fx2 = polinimio(x2);
@@ -35,8 +37,8 @@ public class CalcReglaFalsa {
            if(cont == 0) Ea = 100;
            else if(esX1) Ea = Math.abs((xr-x1)/xr)*100;
            else if(!esX1) Ea = Math.abs((xr-x2)/xr)*100;
-           cont++;
            imprimir();
+           cont++;
            if(fx1*fxr > 0){
                x1 = xr;
                esX1 = true;
@@ -44,17 +46,18 @@ public class CalcReglaFalsa {
                x2 = xr;
                esX1 = false;
            }
-       }while(Ea>Es);
+           if(cont == it) break;
+       }while(Ea>Es || cont< it);
        System.out.print("La raíz aproximada es: "+xr);
     }
     static void imprimir(){
         String abc = "-------------------------------------------------------------------------------";
         if(cont == 0){
             System.out.printf("+%s+\n", abc);
-            System.out.printf("|%-6s|%-6s|%-9s|%-9s|%-8s|%-9s|%-10s|%-8s|%-8s|\n", "x1", "x2", "f(x1)", "f(x2)","xr","f(xr)", "f(x1)f(xr)", "ea","es");
+            System.out.printf("|%-6s|%-6s|%-9s|%-8s|%-6s|%-9s|%-10s|%-8s|%-8s|\n", "x1", "x2", "f(x1)", "f(x2)","xr","f(xr)", "f(x1)f(xr)", "ea","es");
             System.out.printf("+%s+\n", abc);
         }
-        System.out.printf("|%04.4f|%04.4f|%05.6f|%05.6f|%04.4f|%05.6f|%04.4f|%04.4f|%04.4f|\n",x1, x2, fx1, fx2, xr, fxr, fx1*fxr,Ea,Es);
+        System.out.printf("|%04.4f|%04.4f|%05.6f|%05.6f|%04.4f|%05.6f|%04.8f|%04.4f|%04.4f|\n",x1, x2, fx1, fx2, xr, fxr, fx1*fxr,Ea,Es);
  
     }
     static void ingresaCif(){
