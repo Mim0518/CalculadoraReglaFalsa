@@ -1,5 +1,5 @@
 import java.util.*;
-public class CalcReglaFalsa {
+public class CalcIncrementos {
     public static void main(String[] args) {
         programa();
     }
