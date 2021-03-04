@@ -78,6 +78,7 @@ public class CalcIncrementos {
         System.out.printf("|%04.4f|%04.13f|%05.6f|%04.4f|%04.4f|\n",x[0][cont], x[1][cont], x[2][cont], x[3][cont], Es);
  
     }
+    
     static void ingresaFac(){
         double temp = 0;
         do { 
@@ -86,6 +87,7 @@ public class CalcIncrementos {
         } while(!(temp > 0));
         q = temp;
     }
+
     static void ingresaCif(){
         double temp = 0;
         do { 
